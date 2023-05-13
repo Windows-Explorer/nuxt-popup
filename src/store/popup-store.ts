@@ -1,16 +1,18 @@
 import { defineStore } from 'pinia'
-import { IPopupProps } from '../interfaces/props.interface'
 import { IPopupOptions } from '../interfaces/popup.interface'
 import { Ref, ref } from "vue"
 
 export const usePopupStore = defineStore("popupStore", () => {
-    const popupZIndex: Ref<number> = ref(0)
     const popups: Ref<IPopupOptions[]> = ref([])
 
-    async function open(props: IPopupProps) {
-        
+    async function openPopup(popupOptions: IPopupOptions) {
+        popups.value.push(popupOptions)
     }
 
-    return { popups, popupZIndex, open }
+    async function closePopup(popupId: number) {
+        popups.value.splice(popupId, 1)
+    }
+
+    return { popups, openPopup, closePopup }
 })
 

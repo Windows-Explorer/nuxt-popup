@@ -1,6 +1,7 @@
 import { defineNuxtPlugin } from '#app'
 import VPopupWrapper from "../components/VPopupWrapper.vue"
 import { createVNode, render } from 'vue'
+import { usePopupStore } from '../store/popup-store'
 
 
 export default defineNuxtPlugin(async (nuxtApp) => {

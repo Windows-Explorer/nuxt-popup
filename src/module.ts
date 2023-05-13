@@ -16,13 +16,11 @@ export default defineNuxtModule<ModuleOptions>({
 
     addComponent({
       name: "VPopup",
-      export: "VPopup",
       filePath: resolver.resolve("./components/VPopup.vue")
     })
 
     addComponent({
       name: "VPopupWrapper",
-      export: "VPopupWrapper",
       filePath: resolver.resolve("./components/VPopupWrapper.vue")
     })
 
