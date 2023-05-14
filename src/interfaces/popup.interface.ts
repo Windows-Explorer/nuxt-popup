@@ -12,12 +12,12 @@ export interface IPopupOptions {
 
 export interface IPopupActionsProps {
     ok?: {
-        label: string
+        label?: string
         use: boolean
         action?: Promise<void> | void
     },
     cancel?: {
-        label: string
+        label?: string
         use: boolean
     }
 }

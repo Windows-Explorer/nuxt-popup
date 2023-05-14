@@ -1,7 +1,7 @@
 <template>
     <div class="popup-clickable-backdrop" @click="closePopup()" :style="{ zIndex: index }">
         <div class="popup" @click.stop>
-            <button class="popup-close-button" @click="closePopup()">
+            <button class="popup-close-button" @click="closePopup()" v-if="props.closeButton">
                 <v-close-icon />
             </button>
             <div class="popup-header">
@@ -16,13 +16,15 @@
             </div>
             <div class="popup-footer-container">
                 <div class="popup-footer">
-                    <button class="popup-action popup-action-positive" v-if="props.actions?.ok?.use" @click="props.actions.ok.action">
+                    <button class="popup-action popup-action-positive" v-if="props.actions?.ok?.use"
+                        @click="props.actions.ok.action; closePopup()">
                         <div class="action-content" style="color: #6464ff;">
                             {{ props.actions?.ok?.label }}
                         </div>
                     </button>
-                    <button class="popup-action popup-action-neutral" v-if="props.actions?.cancel?.use" @click="closePopup()">
-                        <div class="action-content" style="color: rgb(96 96 96)">
+                    <button class="popup-action popup-action-neutral" v-if="props.actions?.cancel?.use"
+                        @click="closePopup()">
+                        <div class="action-content" style="color: rgb(96, 96, 96)">
                             {{ props.actions?.cancel?.label }}
                         </div>
                     </button>
@@ -36,7 +38,6 @@
 import { onMounted, onUnmounted } from 'vue'
 import { IPopupOptions } from '../interfaces/popup.interface'
 import { usePopupEmitter } from '../popup-emitter'
-import { Ref, ref } from 'vue'
 
 const props = withDefaults(defineProps<IPopupOptions>(), {
     actions() {
@@ -157,10 +158,10 @@ onUnmounted(async () => document.removeEventListener("keydown", keydownHandler))
     justify-content: center;
     padding: 0;
     outline: none;
-    font-size: .8rem;
     box-sizing: border-box;
     z-index: 1;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .popup-action:hover::before {
@@ -171,6 +172,7 @@ onUnmounted(async () => document.removeEventListener("keydown", keydownHandler))
 .popup-action-neutral::before {
     background: rgba(109, 109, 109, 0.1);
 }
+
 .popup-action-positive::before {
     background: rgba(26, 92, 255, 0.1);
 }
@@ -223,6 +225,7 @@ onUnmounted(async () => document.removeEventListener("keydown", keydownHandler))
     justify-content: center;
     transition: 0.25s ease;
     align-items: center;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .popup-close-button:hover {
@@ -233,4 +236,27 @@ onUnmounted(async () => document.removeEventListener("keydown", keydownHandler))
 .popup-close-button:hover svg {
     fill: #2c3e50;
 }
+</style>
+
+<style scoped>
+
+@media screen and (max-width: 500px) {
+    .popup {
+        width: max-content;
+        min-width: 200px;
+    }
+    .popup-close-button {
+        right: 32px;
+        height: 42px;
+        width: 42px;
+    }
+    .popup-close-button svg {
+        width: 42px;
+    }
+
+    .action-content {
+        font-size: large;
+    }
+}
+
 </style>

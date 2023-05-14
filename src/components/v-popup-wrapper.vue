@@ -20,8 +20,9 @@ const { popups } = storeToRefs(popupEmitter)
 
 async function open() {
     popupEmitter.openPopup({
-        message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim felis nisl, et malesuada libero rhoncus non. Etiam eleifend lacinia hendrerit. Fusce quis facilisis arcu, non gravida mi. Ut sed posuere ipsum. Fusce aliquam nibh at lacus semper aliquam. Etiam pretium, arcu vitae faucibus condimentum, ex orci imperdiet quam, finibus vulputate odio metus quis purus. Cras quam risus, pellentesque non leo at, pretium imperdiet orci. Integer consequat tempor urna ut lacinia. Praesent nisi risus, porta et vehicula nec, fringilla sit amet sapien. Morbi sagittis purus sed purus condimentum, sit amet blandit tortor vehicula.",
-        title: "Lorem Ipsum"
+        message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        title: "Lorem Ipsum",
+        closeButton: false
     })
 }
 </script>
