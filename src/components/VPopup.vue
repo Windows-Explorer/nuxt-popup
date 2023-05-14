@@ -1,5 +1,5 @@
 <template>
-    <div class="popup-clickable-backdrop" @click="closePopup()">
+    <div class="popup-clickable-backdrop" @click="closePopup()" :style="{ zIndex: index }">
         <div class="popup" @click.stop>
             <div class="popup-header">
                 <h2 class="popup-title">
@@ -10,7 +10,6 @@
                 <span>
                     {{ props.message }}
                 </span>
-                <slot></slot>
             </div>
             <div class="popup-footer">
                 <button class="popup-action-ok" v-if="props.actions?.ok?.use" @click="props.actions.ok.action">
@@ -25,19 +24,44 @@
 </template>
 
 <script lang="ts" setup>
+import { onMounted, onUnmounted } from 'vue'
 import { IPopupOptions } from '../interfaces/popup.interface'
-import { usePopupStore } from '../store/popup-store'
+import { usePopupEmitter } from '../popup-emitter'
 
 interface IProps extends IPopupOptions {
     index: number
 }
 
-const props = withDefaults(defineProps<IProps>(), {})
-const popupStore = usePopupStore()
+const props = withDefaults(defineProps<IProps>(), {
+    actions() {
+        return {
+            ok: {
+                label: "OK",
+                use: true
+            },
+            cancel: {
+                label: "Cancel",
+                use: true
+            }
+        }
+    }
+})
+const popupEmitter = usePopupEmitter()
 
 async function closePopup() {
-    popupStore.closePopup(props.index)
+    popupEmitter.closePopup(props.index)
 }
+
+async function keydownHandler(event: KeyboardEvent) {
+    if (event.code == "Escape") closePopup()
+}
+
+onMounted(async () => {
+    document.addEventListener("keydown", keydownHandler)
+})
+onUnmounted(async () => {
+    document.removeEventListener("keydown", keydownHandler)
+})
 
 </script>
 
