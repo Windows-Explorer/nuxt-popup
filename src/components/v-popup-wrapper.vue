@@ -20,8 +20,8 @@ const { popups } = storeToRefs(popupEmitter)
 
 async function open() {
     popupEmitter.openPopup({
-        message: "Vuesax is a relatively new framework with a refreshing design and in the latest trends, vuesax based on vuejs which means that we go hand in hand with one of the most popular javascript frameworks in the world and with a huge community with which you will have all the help and documentation to create and make your project",
-        title: "Welcome to Vuesax"
+        message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim felis nisl, et malesuada libero rhoncus non. Etiam eleifend lacinia hendrerit. Fusce quis facilisis arcu, non gravida mi. Ut sed posuere ipsum. Fusce aliquam nibh at lacus semper aliquam. Etiam pretium, arcu vitae faucibus condimentum, ex orci imperdiet quam, finibus vulputate odio metus quis purus. Cras quam risus, pellentesque non leo at, pretium imperdiet orci. Integer consequat tempor urna ut lacinia. Praesent nisi risus, porta et vehicula nec, fringilla sit amet sapien. Morbi sagittis purus sed purus condimentum, sit amet blandit tortor vehicula.",
+        title: "Lorem Ipsum"
     })
 }
 </script>
@@ -49,6 +49,7 @@ async function open() {
 .backdrop-leave-active {
     animation: opacityUp 0.3s ease reverse;
 }
+
 .backdrop-enter-active {
     animation: opacityUp 0.4s ease;
 }
@@ -81,6 +82,7 @@ async function open() {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
