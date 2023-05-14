@@ -1,9 +1,12 @@
 import { VNode } from "vue"
 
 export interface IPopupOptions {
+    index?: number
     title?: string
     message?: string
     actions?: IPopupActionsProps
+    closeButton?: boolean
+    // visible?: boolean
     // html?: IPopupHTMLOptions
 }
 

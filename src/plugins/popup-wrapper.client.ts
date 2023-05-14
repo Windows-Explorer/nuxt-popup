@@ -1,5 +1,5 @@
 import { defineNuxtPlugin } from '#app'
-import VPopupWrapper from "../components/VPopupWrapper.vue"
+import VPopupWrapper from "../components/v-popup-wrapper.vue"
 import { createVNode, render } from 'vue'
 
 

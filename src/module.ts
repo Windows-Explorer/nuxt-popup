@@ -16,16 +16,21 @@ export default defineNuxtModule<ModuleOptions>({
 
     addComponent({
       name: "VPopup",
-      filePath: resolver.resolve("./components/VPopup.vue")
+      filePath: resolver.resolve("./components/v-popup.vue")
     })
 
     addComponent({
       name: "VPopupWrapper",
-      filePath: resolver.resolve("./components/VPopupWrapper.vue")
+      filePath: resolver.resolve("./components/v-popup-wrapper.vue")
+    })
+
+    addComponent({
+      name: "v-close-icon",
+      filePath: resolver.resolve("./components/icons/v-close-icon.vue")
     })
 
     // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
     addPlugin(resolver.resolve('./plugins/popup-wrapper.client'))
-    addPlugin(resolver.resolve('./plugins/popup-store.vue-plugin'))
+    addPlugin(resolver.resolve('./plugins/pinia.vue-plugin'))
   }
 })

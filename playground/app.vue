@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span>lock</span>
+    <span>content</span>
   </div>
 </template>
 
