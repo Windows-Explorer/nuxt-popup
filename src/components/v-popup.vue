@@ -16,13 +16,13 @@
             </div>
             <div class="popup-footer-container">
                 <div class="popup-footer">
-                    <button class="popup-action" v-if="props.actions?.ok?.use" @click="props.actions.ok.action">
-                        <div class="action-content">
+                    <button class="popup-action popup-action-positive" v-if="props.actions?.ok?.use" @click="props.actions.ok.action">
+                        <div class="action-content" style="color: #6464ff;">
                             {{ props.actions?.ok?.label }}
                         </div>
                     </button>
-                    <button class="popup-action" v-if="props.actions?.cancel?.use" @click="closePopup()">
-                        <div class="action-content">
+                    <button class="popup-action popup-action-neutral" v-if="props.actions?.cancel?.use" @click="closePopup()">
+                        <div class="action-content" style="color: rgb(96 96 96)">
                             {{ props.actions?.cancel?.label }}
                         </div>
                     </button>
@@ -42,7 +42,7 @@ const props = withDefaults(defineProps<IPopupOptions>(), {
     actions() {
         return {
             ok: {
-                label: "OK",
+                label: "Ok",
                 use: true
             },
             cancel: {
@@ -102,12 +102,16 @@ onUnmounted(async () => document.removeEventListener("keydown", keydownHandler))
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 .popup-header h4 {
     margin: 0px;
     font-weight: 400;
     padding: 10px 16px;
+    font-size: x-large;
+    align-self: flex-start;
+    width: 100%;
 }
 
 .popup-content-container {
@@ -164,9 +168,15 @@ onUnmounted(async () => document.removeEventListener("keydown", keydownHandler))
     transform: scale(1);
 }
 
+.popup-action-neutral::before {
+    background: rgba(109, 109, 109, 0.1);
+}
+.popup-action-positive::before {
+    background: rgba(26, 92, 255, 0.1);
+}
+
 .popup-action::before {
     content: "";
-    background: rgba(26, 92, 255, 0.1);
     position: absolute;
     bottom: 0;
     left: 0;
@@ -183,6 +193,8 @@ onUnmounted(async () => document.removeEventListener("keydown", keydownHandler))
 
 .action-content {
     font-family: Poppins, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
     padding: 10px 30px;
     width: 100%;
     display: flex;
