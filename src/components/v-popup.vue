@@ -1,6 +1,6 @@
 <template>
-    <div class="popup-clickable-backdrop" @click="closePopup()" :style="{ zIndex: index }">
-        <div class="popup" @click.stop :class="props.popupStyle">
+    <div class="popup-clickable-backdrop" @click="closePopup()" :style="{ zIndex: props.index }">
+        <div class="popup" @click.stop :class="props.popupStyle" :id="props.id?.toString()">
             <button class="popup-close-button" @click="closePopup()" v-if="props.closeButton?.use"
                 :class="popupCloseButtonClass">
                 <v-close-icon />
@@ -40,30 +40,9 @@ import { onMounted, onUnmounted, Ref, ref } from 'vue'
 import { IPopupOptions } from '../interfaces/popup.interface'
 import { usePopupEmitter } from '../popup-emitter'
 import { PopupStyles, PopupCloseButtonStyles } from "../interfaces/popup-styles.enum"
+import { DEFAULT_POPUP_OPTIONS } from '../constants/default-popup-options'
 
-const props = withDefaults(defineProps<IPopupOptions>(), {
-    actions() {
-        return {
-            ok: {
-                label: "Ok",
-                use: true
-            },
-            cancel: {
-                label: "Cancel",
-                use: true
-            }
-        }
-    },
-    popupStyle() {
-        return PopupStyles.rounded
-    },
-    closeButton() {
-        return {
-            use: true,
-            offset: true
-        }
-    },
-})
+const props = withDefaults(defineProps<IPopupOptions>(), {})
 
 const popupEmitter = usePopupEmitter()
 

@@ -1,7 +1,9 @@
 import { PopupStyles } from "./popup-styles.enum"
 
 export interface IPopupOptions {
+    id?: number | string
     index?: number
+    // visibile: boolean
     title?: string
     message?: string
     actions?: IPopupActionsProps
@@ -12,7 +14,7 @@ export interface IPopupOptions {
     popupStyle?: PopupStyles
 }
 
-export interface IPopupActionsProps {
+interface IPopupActionsProps {
     ok?: {
         label?: string
         use: boolean

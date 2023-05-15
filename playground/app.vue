@@ -1,6 +1,7 @@
 <template>
   <div>
-    <button @click="open()">Open popup</button>
+    <button @click="openFirst()">Open first popup</button>
+    <button @click="openSecond()">Open second popup</button>
   </div>
 </template>
 
@@ -11,8 +12,9 @@ import { useNuxtApp } from 'nuxt/app'
 const nuxtApp = useNuxtApp()
 const popupEmitter = usePopupEmitter()
 
-async function open() {
+async function openFirst() {
   const popup = await popupEmitter.openPopup({
+    id: "dick",
     message: "Test popup",
     title: "title",
     actions: {
@@ -23,7 +25,7 @@ async function open() {
       }
     }
   })
-  popup.value.actions.ok.action = async () => popupEmitter.closePopup(popup.value.index)
+  popup.value.actions.ok.action = async () => popupEmitter.closePopup("dick")
 }
 </script>
 

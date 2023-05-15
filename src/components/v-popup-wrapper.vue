@@ -6,7 +6,7 @@
     <TransitionGroup name="scale">
         <v-popup v-for="(popup, index) in popups" :key="index" :title="popup.title" :message="popup.message"
             :actions="popup.actions" :index="index" :close-button="popup.closeButton" :popupStyle="popup.popupStyle"
-        />
+            :id="popup.id" />
     </TransitionGroup>
 </template>
 
