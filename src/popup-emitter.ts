@@ -6,12 +6,13 @@ export const usePopupEmitter = defineStore("popupEmitter", () => {
     const popups: Ref<IPopupOptions[]> = ref([])
 
     async function openPopup(popupOptions: IPopupOptions) {
-        popupOptions.index = popups.value.length + 1
+        popupOptions.index = popups.value.length
         popups.value.push(popupOptions)
+        return ref(popupOptions)
     }
 
-    async function closePopup(popupId: number) {
-        popups.value.splice(popupId, 1)
+    async function closePopup(index: number) {
+        popups.value.splice(index, 1)
     }
 
     async function closeAll() {

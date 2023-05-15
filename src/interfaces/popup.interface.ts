@@ -2,8 +2,8 @@ import { PopupStyles } from "./popup-styles.enum"
 
 export interface IPopupOptions {
     index?: number
-    title: string
-    message: string
+    title?: string
+    message?: string
     actions?: IPopupActionsProps
     closeButton?: {
         use: boolean

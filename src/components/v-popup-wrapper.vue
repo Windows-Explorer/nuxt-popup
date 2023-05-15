@@ -2,9 +2,11 @@
     <Transition name="backdrop">
         <div class="popup-backdrop" v-if="popups.length > 0" />
     </Transition>
+    {{ popups }}
     <TransitionGroup name="scale">
         <v-popup v-for="(popup, index) in popups" :key="index" :title="popup.title" :message="popup.message"
-            :actions="popup.actions" :index="index" :close-button="popup.closeButton" :popupStyle="popup.popupStyle" />
+            :actions="popup.actions" :index="index" :close-button="popup.closeButton" :popupStyle="popup.popupStyle"
+        />
     </TransitionGroup>
 </template>
 
