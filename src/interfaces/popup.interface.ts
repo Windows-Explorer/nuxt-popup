@@ -1,29 +1,25 @@
-import { VNode } from "vue"
+import { PopupStyles } from "./popup-styles.enum"
 
 export interface IPopupOptions {
     index?: number
-    title?: string
-    message?: string
+    title: string
+    message: string
     actions?: IPopupActionsProps
-    closeButton?: boolean
-    // visible?: boolean
-    // html?: IPopupHTMLOptions
+    closeButton?: {
+        use: boolean
+        offset: boolean
+    }
+    popupStyle?: PopupStyles
 }
 
 export interface IPopupActionsProps {
     ok?: {
         label?: string
         use: boolean
-        action?: Promise<void> | void
+        action?: any
     },
     cancel?: {
         label?: string
         use: boolean
     }
 }
-
-// Not tested
-// export interface IPopupHTMLOptions {
-//     use: boolean
-//     html?: VNode
-// }

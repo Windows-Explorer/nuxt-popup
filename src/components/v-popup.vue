@@ -1,7 +1,8 @@
 <template>
     <div class="popup-clickable-backdrop" @click="closePopup()" :style="{ zIndex: index }">
-        <div class="popup" @click.stop>
-            <button class="popup-close-button" @click="closePopup()" v-if="props.closeButton">
+        <div class="popup" @click.stop :class="props.popupStyle">
+            <button class="popup-close-button" @click="closePopup()" v-if="props.closeButton?.use"
+                :class="popupCloseButtonClass">
                 <v-close-icon />
             </button>
             <div class="popup-header">
@@ -17,7 +18,7 @@
             <div class="popup-footer-container">
                 <div class="popup-footer">
                     <button class="popup-action popup-action-positive" v-if="props.actions?.ok?.use"
-                        @click="props.actions.ok.action; closePopup()">
+                        @click="props.actions.ok.action">
                         <div class="action-content" style="color: #6464ff;">
                             {{ props.actions?.ok?.label }}
                         </div>
@@ -35,9 +36,10 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, Ref, ref } from 'vue'
 import { IPopupOptions } from '../interfaces/popup.interface'
 import { usePopupEmitter } from '../popup-emitter'
+import { PopupStyles, PopupCloseButtonStyles } from "../interfaces/popup-styles.enum"
 
 const props = withDefaults(defineProps<IPopupOptions>(), {
     actions() {
@@ -51,10 +53,26 @@ const props = withDefaults(defineProps<IPopupOptions>(), {
                 use: true
             }
         }
-    }
+    },
+    popupStyle() {
+        return PopupStyles.rounded
+    },
+    closeButton() {
+        return {
+            use: true,
+            offset: true
+        }
+    },
 })
 
 const popupEmitter = usePopupEmitter()
+
+
+const popupCloseButtonClass: Ref<PopupCloseButtonStyles> = ref(PopupCloseButtonStyles.offset)
+async function getPopupCloseButtonClass() {
+    if (props.closeButton?.offset) popupCloseButtonClass.value = PopupCloseButtonStyles.offset
+    else popupCloseButtonClass.value = PopupCloseButtonStyles.notOffset
+}
 
 async function closePopup() {
     popupEmitter.closePopup(props.index!)
@@ -64,7 +82,10 @@ async function keydownHandler(event: KeyboardEvent) {
     if (event.code == "Escape") closePopup()
 }
 
-onMounted(async () => document.addEventListener("keydown", keydownHandler))
+onMounted(async () => {
+    document.addEventListener("keydown", keydownHandler)
+    getPopupCloseButtonClass()
+})
 onUnmounted(async () => document.removeEventListener("keydown", keydownHandler))
 
 </script>
@@ -82,12 +103,35 @@ onUnmounted(async () => document.removeEventListener("keydown", keydownHandler))
     align-items: center;
 }
 
+.popup-rounded {
+    border-radius: 20px;
+}
+
+.popup-rounded .popup-close-button {
+    border-radius: 12px;
+}
+
+.popup-rounded .popup-action {
+    border-radius: 12px;
+}
+
+.popup-square {
+    border-radius: 2px;
+}
+
+.popup-square .popup-action {
+    border-radius: 2px;
+}
+
+.popup-square .popup-close-button {
+    border-radius: 2px;
+}
+
 .popup {
     font-family: Poppins, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     position: relative;
     background-color: white;
     padding: 20px;
-    border-radius: 20px;
     color: rgb(44, 62, 80);
     box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.05);
     display: flex;
@@ -147,7 +191,6 @@ onUnmounted(async () => document.removeEventListener("keydown", keydownHandler))
 .popup-action {
     border: 0;
     margin: 5px;
-    border-radius: 12px;
     transition: all 0.25s ease;
     background-color: transparent;
     position: relative;
@@ -211,12 +254,9 @@ onUnmounted(async () => document.removeEventListener("keydown", keydownHandler))
 
 .popup-close-button {
     position: absolute;
-    top: -6px;
-    right: -6px;
     background-color: #fff;
     cursor: pointer;
     border: 0px;
-    border-radius: 12px;
     margin: 0px;
     height: 34px;
     width: 34px;
@@ -227,6 +267,17 @@ onUnmounted(async () => document.removeEventListener("keydown", keydownHandler))
     align-items: center;
     -webkit-tap-highlight-color: transparent;
 }
+
+.popup-close-button-offset {
+    top: -6px;
+    right: -6px;
+}
+
+.popup-close-button-notOffset {
+    top: 6px;
+    right: 6px;
+}
+
 
 .popup-close-button:hover {
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
@@ -239,17 +290,18 @@ onUnmounted(async () => document.removeEventListener("keydown", keydownHandler))
 </style>
 
 <style scoped>
-
 @media screen and (max-width: 500px) {
     .popup {
         width: max-content;
         min-width: 200px;
     }
+
     .popup-close-button {
         right: 32px;
         height: 42px;
         width: 42px;
     }
+
     .popup-close-button svg {
         width: 42px;
     }
@@ -258,5 +310,4 @@ onUnmounted(async () => document.removeEventListener("keydown", keydownHandler))
         font-size: large;
     }
 }
-
 </style>

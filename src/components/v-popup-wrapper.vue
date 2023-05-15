@@ -1,14 +1,11 @@
 <template>
-    <div class="popup-wrapper">
-        <button @click="open()">OPEN POPUP</button>
-        <Transition name="backdrop">
-            <div class="popup-backdrop" v-if="popups.length > 0" />
-        </Transition>
-        <TransitionGroup name="scale">
-            <v-popup v-for="(popup, index) in popups" :key="index" :title="popup.title" :message="popup.message"
-                :actions="popup.actions" :index="index" />
-        </TransitionGroup>
-    </div>
+    <Transition name="backdrop">
+        <div class="popup-backdrop" v-if="popups.length > 0" />
+    </Transition>
+    <TransitionGroup name="scale">
+        <v-popup v-for="(popup, index) in popups" :key="index" :title="popup.title" :message="popup.message"
+            :actions="popup.actions" :index="index" :close-button="popup.closeButton" :popupStyle="popup.popupStyle" />
+    </TransitionGroup>
 </template>
 
 <script lang="ts" setup>
@@ -17,25 +14,9 @@ import { storeToRefs } from 'pinia'
 
 const popupEmitter = usePopupEmitter()
 const { popups } = storeToRefs(popupEmitter)
-
-async function open() {
-    popupEmitter.openPopup({
-        message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        title: "Lorem Ipsum",
-        closeButton: false
-    })
-}
 </script>
 
 <style scoped>
-.popup-wrapper {
-    top: 0;
-    left: 0;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-}
-
 .popup-backdrop {
     position: fixed;
     width: 100%;

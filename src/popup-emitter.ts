@@ -14,6 +14,10 @@ export const usePopupEmitter = defineStore("popupEmitter", () => {
         popups.value.splice(popupId, 1)
     }
 
-    return { popups, openPopup, closePopup }
+    async function closeAll() {
+        popups.value = []
+    }
+
+    return { popups, openPopup, closePopup, closeAll }
 })
 
