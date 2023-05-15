@@ -3,7 +3,7 @@ import { PopupStyles } from "./popup-styles.enum"
 export interface IPopupOptions {
     id?: number | string
     index?: number
-    // visibile: boolean
+    visibile: boolean
     title?: string
     message?: string
     actions?: IPopupActionsProps
@@ -12,6 +12,12 @@ export interface IPopupOptions {
         offset: boolean
     }
     popupStyle?: PopupStyles
+
+}
+
+export interface IPopup extends IPopupOptions {
+    open: () => Promise<void>
+    close: () => Promise<void>
 }
 
 interface IPopupActionsProps {

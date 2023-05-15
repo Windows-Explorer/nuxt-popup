@@ -1,38 +1,44 @@
 <template>
-    <div class="popup-clickable-backdrop" @click="closePopup()" :style="{ zIndex: props.index }">
-        <div class="popup" @click.stop :class="props.popupStyle" :id="props.id?.toString()">
-            <button class="popup-close-button" @click="closePopup()" v-if="props.closeButton?.use"
-                :class="popupCloseButtonClass">
-                <v-close-icon />
-            </button>
-            <div class="popup-header">
-                <h4 class="popup-title">
-                    {{ props.title }}
-                </h4>
-            </div>
-            <div class="popup-content-container">
-                <div class="popup-content">
-                    <p>{{ props.message }}</p>
+    <Transition name="backdrop">
+        <div class="popup-clickable-backdrop" :style="{ zIndex: props.index }" v-if="props.visibile">
+        </div>
+    </Transition>
+    <Transition name="scale">
+        <div class="popup-wrapper" v-if="props.visibile" @click="closePopup()" :style="{ zIndex: props.index! + 1 }">
+            <div class="popup" @click.stop :class="props.popupStyle" :id="props.id?.toString()">
+                <button class="popup-close-button" @click="closePopup()" v-if="props.closeButton?.use"
+                    :class="popupCloseButtonClass">
+                    <v-close-icon />
+                </button>
+                <div class="popup-header">
+                    <h4 class="popup-title">
+                        {{ props.title }}
+                    </h4>
                 </div>
-            </div>
-            <div class="popup-footer-container">
-                <div class="popup-footer">
-                    <button class="popup-action popup-action-positive" v-if="props.actions?.ok?.use"
-                        @click="props.actions.ok.action">
-                        <div class="action-content" style="color: #6464ff;">
-                            {{ props.actions?.ok?.label }}
-                        </div>
-                    </button>
-                    <button class="popup-action popup-action-neutral" v-if="props.actions?.cancel?.use"
-                        @click="closePopup()">
-                        <div class="action-content" style="color: rgb(96, 96, 96)">
-                            {{ props.actions?.cancel?.label }}
-                        </div>
-                    </button>
+                <div class="popup-content-container">
+                    <div class="popup-content">
+                        <p>{{ props.message }}</p>
+                    </div>
+                </div>
+                <div class="popup-footer-container">
+                    <div class="popup-footer">
+                        <button class="popup-action popup-action-positive" v-if="props.actions?.ok?.use"
+                            @click="props.actions.ok.action">
+                            <div class="action-content" style="color: #6464ff;">
+                                {{ props.actions?.ok?.label }}
+                            </div>
+                        </button>
+                        <button class="popup-action popup-action-neutral" v-if="props.actions?.cancel?.use"
+                            @click="closePopup()">
+                            <div class="action-content" style="color: rgb(96, 96, 96)">
+                                {{ props.actions?.cancel?.label }}
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </Transition>
 </template>
 
 <script lang="ts" setup>
@@ -40,7 +46,7 @@ import { onMounted, onUnmounted, Ref, ref } from 'vue'
 import { IPopupOptions } from '../interfaces/popup.interface'
 import { usePopupEmitter } from '../popup-emitter'
 import { PopupStyles, PopupCloseButtonStyles } from "../interfaces/popup-styles.enum"
-import { DEFAULT_POPUP_OPTIONS } from '../constants/default-popup-options'
+
 
 const props = withDefaults(defineProps<IPopupOptions>(), {})
 
@@ -70,8 +76,64 @@ onUnmounted(async () => document.removeEventListener("keydown", keydownHandler))
 </script>
 
 <style scoped>
-.popup-clickable-backdrop {
+.backdrop-leave-active {
+    animation: opacityUp 0.3s ease reverse;
+}
+
+.backdrop-enter-active {
+    animation: opacityUp 0.4s ease;
+}
+
+.scale-leave-active {
+    animation: scaleUp 0.2s reverse ease;
+}
+
+.scale-enter-active {
+    animation: scaleUp 0.3s ease;
+}
+
+@keyframes scaleUp {
+    0% {
+        transform: scale(0.6);
+        opacity: 0;
+    }
+
+    75% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes opacityUp {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleDown {}
+
+.popup-wrapper {
     background-color: transparent;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-clickable-backdrop {
+    background-color: rgba(0, 0, 0, 0.2);
     width: 100%;
     height: 100%;
     top: 0;
