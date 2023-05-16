@@ -16,8 +16,8 @@ export interface IPopupOptions {
 }
 
 export interface IPopup extends IPopupOptions {
-    open: () => Promise<void>
-    close: () => Promise<void>
+    readonly open: () => Promise<void>
+    readonly close: () => Promise<void>
 }
 
 interface IPopupActionsProps {

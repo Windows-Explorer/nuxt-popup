@@ -5,6 +5,10 @@ import { Ref, ref } from "vue"
 export const usePopupEmitter = defineStore("popupEmitter", () => {
     const popups: Ref<IPopup[]> = ref([])
 
+    async function findPopupIndex(id: number | string): Promise<number> {
+        return popups.value.findIndex(async (value) => value.id === id)
+    }
+
     async function createPopup(popupOptions: IPopupOptions) {
         const popup: IPopup = {
             ...popupOptions,
@@ -22,19 +26,24 @@ export const usePopupEmitter = defineStore("popupEmitter", () => {
     }
 
     async function openPopup(id: number | string) {
-        const openbleIndex = popups.value.findIndex(async (value) => value.id === id)
+        const openbleIndex = await findPopupIndex(id)
         popups.value[openbleIndex].visibile = true
     }
 
     async function closePopup(id: number | string) {
-        const closebleIndex = popups.value.findIndex(async (value) => value.id === id)
+        const closebleIndex = await findPopupIndex(id)
         popups.value[closebleIndex].visibile = false
     }
 
-    async function closeAll() {
+    async function removePopup(id: number | string) {
+        const removebleIndex = await findPopupIndex(id)
+        popups.value.splice(removebleIndex, 1)
+    }
+
+    async function removeAllPopup() {
         popups.value = []
     }
 
-    return { popups, openPopup, closePopup, closeAll, createPopup }
+    return { popups, openPopup, closePopup, removeAllPopup, createPopup, removePopup }
 })
 

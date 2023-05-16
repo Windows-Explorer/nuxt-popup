@@ -47,20 +47,40 @@ import { IPopupOptions } from '../interfaces/popup.interface'
 import { usePopupEmitter } from '../popup-emitter'
 import { PopupStyles, PopupCloseButtonStyles } from "../interfaces/popup-styles.enum"
 
-
-const props = withDefaults(defineProps<IPopupOptions>(), {})
+const props = withDefaults(defineProps<IPopupOptions>(), {
+    visibile: false,
+    actions() {
+        return {
+            ok: {
+                label: "Ok",
+                use: true
+            },
+            cancel: {
+                label: "Cancel",
+                use: true
+            }
+        }
+    },
+    popupStyle: PopupStyles.rounded,
+    closeButton() {
+        return {
+            use: true,
+            offset: true
+        }
+    }
+})
 
 const popupEmitter = usePopupEmitter()
 
 
 const popupCloseButtonClass: Ref<PopupCloseButtonStyles> = ref(PopupCloseButtonStyles.offset)
 async function getPopupCloseButtonClass() {
-    if (props.closeButton?.offset) popupCloseButtonClass.value = PopupCloseButtonStyles.offset
+    if (props.closeButton.offset) popupCloseButtonClass.value = PopupCloseButtonStyles.offset
     else popupCloseButtonClass.value = PopupCloseButtonStyles.notOffset
 }
 
 async function closePopup() {
-    popupEmitter.closePopup(props.index!)
+    popupEmitter.closePopup(props.id!)
 }
 
 async function keydownHandler(event: KeyboardEvent) {
