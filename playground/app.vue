@@ -101,6 +101,7 @@ button {
   border-radius: 10px;
   border: 0px;
   font-size: 16px;
+  cursor: pointer;
 }
 
 .options-block input {
