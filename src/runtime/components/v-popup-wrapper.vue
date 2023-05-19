@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { usePopupEmitter } from '../popup-emitter'
+import { usePopupEmitter } from '../composables/popup-emitter'
 import { storeToRefs } from 'pinia'
 
 const popupEmitter = usePopupEmitter()

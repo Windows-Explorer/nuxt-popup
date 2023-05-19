@@ -33,8 +33,8 @@
 
 <script setup>
 import { PopupStyles } from '../src/interfaces/popup-styles.enum'
-import { usePopupEmitter } from '../src/popup-emitter'
-import { onUnmounted } from './.nuxt/imports'
+import { usePopupEmitter } from '../src/runtime/composables/popup-emitter'
+import { onUnmounted } from "vue"
 
 const popupEmitter = usePopupEmitter()
 const popup = await popupEmitter.createPopup({

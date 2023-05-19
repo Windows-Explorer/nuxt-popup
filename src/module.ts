@@ -1,6 +1,5 @@
-import { defineNuxtModule, addPlugin, createResolver, addComponent, addComponentsDir } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, createResolver, addComponent } from '@nuxt/kit'
 
-// Module options TypeScript interface definition
 export interface ModuleOptions { }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -8,29 +7,27 @@ export default defineNuxtModule<ModuleOptions>({
     name: 'nuxt-popup',
     configKey: 'nuxtPopup'
   },
-  // Default configuration options of the Nuxt module
   defaults: {},
 
   setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
 
     addComponent({
-      name: "VPopup",
-      filePath: resolver.resolve("./components/v-popup.vue")
+      name: "v-popup",
+      filePath: resolver.resolve("./runtime/components/v-popup.vue")
     })
 
     addComponent({
-      name: "VPopupWrapper",
-      filePath: resolver.resolve("./components/v-popup-wrapper.vue")
+      name: "v-popup-wrapper",
+      filePath: resolver.resolve("./runtime/components/v-popup-wrapper.vue")
     })
 
     addComponent({
       name: "v-close-icon",
-      filePath: resolver.resolve("./components/icons/v-close-icon.vue")
+      filePath: resolver.resolve("./runtime/components/icons/v-close-icon.vue")
     })
 
-    // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
-    addPlugin(resolver.resolve("./plugins/popup-wrapper.client"))
-    addPlugin(resolver.resolve("./plugins/pinia.vue-plugin"))
+    addPlugin(resolver.resolve("./runtime/plugins/popup-wrapper.client"))
+    addPlugin(resolver.resolve("./runtime/plugins/pinia.vue-plugin"))
   }
 })

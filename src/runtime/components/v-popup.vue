@@ -43,9 +43,9 @@
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, Ref, ref } from 'vue'
-import { IPopupOptions } from '../interfaces/popup.interface'
-import { usePopupEmitter } from '../popup-emitter'
-import { PopupStyles, PopupCloseButtonStyles } from "../interfaces/popup-styles.enum"
+import { IPopupOptions } from '../../interfaces/popup.interface'
+import { usePopupEmitter } from '../composables/popup-emitter'
+import { PopupStyles, PopupCloseButtonStyles } from "../../interfaces/popup-styles.enum"
 
 const props = withDefaults(defineProps<IPopupOptions>(), {
     visibile: false,

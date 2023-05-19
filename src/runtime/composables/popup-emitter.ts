@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { IPopup, IPopupOptions } from './interfaces/popup.interface'
+import { IPopup, IPopupOptions } from '../../interfaces/popup.interface'
 import { Ref, ref } from "vue"
 
 export const usePopupEmitter = defineStore("popupEmitter", () => {
